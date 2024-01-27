@@ -1,0 +1,39 @@
+# give python access to blender's functionality
+import bpy
+# extend Pythons math functionality
+import math
+
+def Add_Circle(X_Koord, Z_Koord, Menge_Zylinder): # Abschnitte vom Zylinder zum Verbinden von Atomen
+        
+    for i in range(Menge_Zylinder): # Wie viele Kreise auf einander gelagert werden
+            
+        bpy.ops.mesh.primitive_circle_add(radius=0.25, location=(X_Koord + i*3 , 0, Z_Koord)) # 0 steht für die Y-Koordinate des kreises
+    
+def Add_Sphere(X_location, Z_location, radius):
+    
+    Sphere =  bpy.ops.mesh.primitive_uv_sphere_add
+    Sphere(radius=radius, location=(X_location, 0, Z_location))
+    bpy.ops.object.shade_smooth()
+
+def Kohlenstoffreihe():
+    for i in range(5): # Muss noch mit Input gemacht werden
+        Add_Sphere(0 + i*3, 0, 1)
+        
+def Wasserstoffreihe():
+    for i in range(5):
+        Add_Sphere(0+ i*3, 3,0.75)  # Obere Reihe
+        
+        Add_Circle(0, 1.15, i + 1) # Obere Zylinder, 
+        
+        Add_Sphere(0+ i*3, -3, 0.75)   # Untere Reihe
+        
+        Add_Circle(0, -1.15, i + 1) # Untere Zylinder
+        
+    Add_Sphere(-3, 0, 0.75)
+    Add_Sphere(0 + i*3 + 3, 0, 0.75)
+    
+    # Developer Kommentare: + 1 bei den Add_Circle funktionen, sind dafür da,
+    # weil Index bei 0 beginnt
+            
+Kohlenstoffreihe()
+Wasserstoffreihe()
