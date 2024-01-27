@@ -1,0 +1,55 @@
+# give python access to blender's functionality
+import bpy
+# extend Pythons math functionality
+import math
+
+def Zylinder():
+    # create variables used in the loop
+    X_Kor_Circle = i * XY # Wo der Zylinder plaziert werden soll
+    number_Circles = 10
+
+    for i in range(number_Circles):
+        # add a triangle mesh into the scene
+        current_radius = current_radius + radius_step
+        bpy.ops.mesh.primitive_circle_add(vertices=100, radius= current_radius)
+
+        # get a reference to the currently active object
+        Zylinder_mesh = bpy.context.active_object
+
+        # rotate mest about the x-axis
+        degrees = -90
+        radians = math.radians(degrees)
+
+        triangle_mesh.rotation_euler.x = radians
+
+        # convert mesh into curve
+        bpy.ops.object.convert(target='CURVE')
+
+
+        # add bevel to curve
+        triangle_mesh.data.bevel_depth = 0.05
+        triangle_mesh.data.bevel_depth = 0.16
+
+        # shade smooth
+        bpy.ops.object.shade_smooth()
+
+def Add_Sphere(X_location, Z_location, radius):
+    
+    Sphere =  bpy.ops.mesh.primitive_uv_sphere_add
+    Sphere(radius=radius, location=(X_location, 0, Z_location))
+    bpy.ops.object.shade_smooth()
+
+def Kohlenstoffreihe():
+    for i in range(5): # Muss noch mit Input gemacht werden
+        Add_Sphere(0 + i*3, 0, 1)
+        
+def Wasserstoffreihe():
+    for i in range(5):
+        Add_Sphere(0+ i*3, 3,0.75)
+        Add_Sphere(0+ i*3, -3, 0.75)
+        
+    Add_Sphere(-3, 0, 0.75)
+    Add_Sphere(0 + i*3 + 3, 0, 0.75)
+            
+Kohlenstoffreihe()
+Wasserstoffreihe()
